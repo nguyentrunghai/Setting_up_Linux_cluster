@@ -6,7 +6,7 @@ The cluster includes one server and several clients. User login authentication i
 Users' home and application directories are exported from the server using NFS. 
 The clients use Autofs to mount users's home and applications directories on demand.
 
-# 1 Preparation
+# Preparation
 After install Ubuntu on the server and clients, we need to move the admin user out of the /home direcrory 
 to avoid overiding when we mount /home from the server to clients.
 
@@ -17,7 +17,8 @@ This is done on the server only.
 ## Move the admin user on both server and clients
 
 Change user to root
-~$ sudo -i
+
+`<~$ sudo -i>`
 
 Edit the passwd file
 ~# vi /etc/passwd
