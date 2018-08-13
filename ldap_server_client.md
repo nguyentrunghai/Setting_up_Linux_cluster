@@ -14,11 +14,11 @@ We need to also rename the /home directory to /rhome and create a new empty /hom
 This will make things easiser when we want to move all the users' data to another disk partition.
 This is done on the server only.
 
-## Move the admin user on both server and clients
+## Move the admin user out of /home
+This is done on both server and clients.
 
 Change user to root
-
-`<~$ sudo -i>`
+`~$ sudo -i`
 
 Edit the passwd file
 ~# vi /etc/passwd
