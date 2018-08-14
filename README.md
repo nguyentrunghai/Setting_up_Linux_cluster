@@ -1,5 +1,5 @@
 
-This documentats how I set up an Ubuntu linux cluster for our Computational Chemistry Lab at 
+This documents how I set up an Ubuntu linux cluster for our Computational Chemistry Lab at 
 University of Illinois at Chicago.
 
 The cluster includes one server and several clients. User login authentication is managed by OpenLDAP.
