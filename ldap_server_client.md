@@ -209,24 +209,252 @@ Run the command:
 
 Create a file called `schema_convert.conf` with the contents:
 
-`include /etc/ldap/schema/core.schema
-include /etc/ldap/schema/collective.schema
-include /etc/ldap/schema/corba.schema
-include /etc/ldap/schema/cosine.schema
-include /etc/ldap/schema/duaconf.schema
-include /etc/ldap/schema/dyngroup.schema
-include /etc/ldap/schema/inetorgperson.schema
-include /etc/ldap/schema/java.schema
-include /etc/ldap/schema/misc.schema
-include /etc/ldap/schema/nis.schema
-include /etc/ldap/schema/openldap.schema
-include /etc/ldap/schema/ppolicy.schema
-include /etc/ldap/schema/ldapns.schema
-include /etc/ldap/schema/pmi.schema`
+`include /etc/ldap/schema/core.schema`
+
+`include /etc/ldap/schema/collective.schema`
+
+`include /etc/ldap/schema/corba.schema`
+
+`include /etc/ldap/schema/cosine.schema`
+
+`include /etc/ldap/schema/duaconf.schema`
+
+`include /etc/ldap/schema/dyngroup.schema`
+
+`include /etc/ldap/schema/inetorgperson.schema`
+
+`include /etc/ldap/schema/java.schema`
+
+`include /etc/ldap/schema/misc.schema`
+
+`include /etc/ldap/schema/nis.schema`
+
+`include /etc/ldap/schema/openldap.schema`
+
+`include /etc/ldap/schema/ppolicy.schema`
+
+`include /etc/ldap/schema/ldapns.schema`
+
+`include /etc/ldap/schema/pmi.schema`
+
+Create a directory:
+
+`mkdir ldif_output`
+
+Run the following commands
+
+`slapcat -f schema_convert.conf -F ldif_output -n 0 | grep corba,cn=schema`
+
+`slapcat -f schema_convert.conf -F ldif_output -n0 -H ldap:///cn={2}corba,cn=schema,cn=config -l cn=corba.ldif`
+
+Edit `cn=corba.ldif` to arrive at the following attributes:
+
+`dn: cn=corba,cn=schema,cn=config`
+
+`...`
+
+`cn: corba`
+
+And remove the following lines from the bottom:
+
+`structuralObjectClass: olcSchemaConfig`
+
+`entryUUID: 52109a02-66ab-1030-8be2-bbf166230478`
+
+`creatorsName: cn=config`
+
+`createTimestamp: 20110829165435Z`
+
+`entryCSN: 20110829165435.935248Z#000000#000#000000`
+
+`modifiersName: cn=config`
+
+`modifyTimestamp: 20110829165435Z`
+
+Run the command
+
+`sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f cn\=corba.ldif`
 
 
-#
+## Create self-signed Certificate
+
+`sudo apt-get install gnutls-bin ssl-cert`
+
+`sudo sh -c "certtool --generate-privkey > /etc/ssl/private/cakey.pem"`
+
+`sudo vim /etc/ssl/ca.info`
+
+With the following template
+
+`cn = My Lab`
+
+`ca`
+
+`cert_signing_key`
+
+Run the commands
+
+`sudo certtool --generate-self-signed --load-privkey /etc/ssl/private/cakey.pem --template /etc/ssl/ca.info --outfile /etc/ssl/certs/cacert.pem`
+
+`sudo certtool --generate-privkey --bits 1024 --outfile /etc/ssl/private/mylab_slapd_key.pem`
+
+`sudo vim /etc/ssl/mylab.info`
+
+Add the following lines
+
+`organization = My Lab`
+
+`cn = mylab.xx.xx.edu`
+
+`tls_www_server`
+
+`encryption_key`
+
+`signing_key`
+
+`expiration_days = 3650`
+
+Then run
+
+`sudo certtool --generate-certificate --load-privkey /etc/ssl/private/mylab_slapd_key.pem --load-ca-certificate /etc/ssl/certs/cacert.pem --load-ca-privkey /etc/ssl/private/cakey.pem --template /etc/ssl/mylab.info --outfile /etc/ssl/certs/mylab_slapd_cert.pem`
+
+`sudo chgrp openldap /etc/ssl/private/mylab_slapd_key.pem`
+
+`sudo chmod 0640 /etc/ssl/private/mylab_slapd_key.pem`
+
+`sudo gpasswd -a openldap ssl-cert`
+
+`sudo systemctl restart slapd.service`
+
+Create the file called `certinfo.ldif` with the contents
+
+`dn: cn=config`
+
+`add: olcTLSCACertificateFile`
+
+`olcTLSCACertificateFile: /etc/ssl/certs/cacert.pem`
+
+`-`
+
+`add: olcTLSCertificateFile`
+
+`olcTLSCertificateFile: /etc/ssl/certs/mylab_slapd_cert.pem`
+
+`-`
+
+`add: olcTLSCertificateKeyFile`
+
+`olcTLSCertificateKeyFile: /etc/ssl/private/mylab_slapd_key.pem`
+
+Then run
+
+`sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f certinfo.ldif`
+
+# LDAP Authentication
+
 Since we will allow users to login into the server directly, 
-we need to configure LDAP client on the server
+we need to configure LDAP client on the server also.
 
+On the client, install
+
+`sudo apt-get install ldap-utils`
+
+On the client, edit 
+
+`sudo vim /etc/ldap/ldap.conf`
+
+Change the parameters `BASE` and `URI` to
+
+`BASE   dc=mylab,dc=xx,dc=xx,dc=edu`
+
+`URI    ldap://IP of the server`
+
+On the server, edit
+
+`sudo vim /etc/ldap/ldap.conf`
+
+Change the parameters `BASE` and `URI` to
+
+`BASE   dc=mylab,dc=xx,dc=xx,dc=edu`
+
+`URI    ldap://localhost`
+
+On both the server and client, install 
+
+`sudo apt-get install libnss-ldapd libpam-ldapd nslcd`
+
+It will ask which services to use, choose at least the three: `passwd`, `group` and `shadow`.
+
+Check authentication:
+
+`getent passwd`
+
+`getent group`
+
+`getent shadow`
+
+we should see `ldapuser1` in the output.
+
+On the server, run 
+
+`sudo pam-auth-update`
+
+In addition to the defaults, select `Automatically create user's home on first login`
+
+On the server 
+
+`su ldapser1`
+
+This first login will create the directory `/home/ldapuser1`.
+
+
+# Setting up NFS on the server
+
+`sudo apt-get install nfs-kernel-server`
+
+Edit the file `/etc/exports`
+
+`sudo vim /etc/exports`
+
+Add the following lines
+
+/rhome             nn.nn.nn.0/24(rw,sync)
+/share             nn.nn.nn.0/24(rw,sync)
+
+`sudo mkdir -p /share/apps`
+
+`sudo /etc/init.d/nfs-kernel-server restart`
+
+# Setting up Autofs on clients
+
+`sudo apt-get install autofs`
+
+Check directories shared by the server
+
+`showmount -e server's IP`
+
+Edit `/etc/ldap/ldap.conf`
+
+`sudo vim /etc/ldap/ldap.conf`
+
+and add
+
+`/home   /etc/auto.home  --timeout=600`
+
+`/share  /etc/auto.share --timeout=600`
+
+
+Create two map files
+
+`sudo vim /etc/auto.home`
+
+and add
+
+`*    -nfsvers=4 -fstype=auto  server's IP:/rhome/&`
+
+`sudo vim /etc/auto.share`
+
+and add
+
+`apps    -nfsvers=4 -fstype=auto  server's IP:/rhome/apps`
 
