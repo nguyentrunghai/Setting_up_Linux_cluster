@@ -95,7 +95,7 @@ Add the line.
 `sudo mount -a`
 
 
-# Setting up OpenLDAP server
+# Setting up OpenLDAP Server
 
 On the server, install:
 
@@ -168,7 +168,7 @@ Add it  to the database.
 
 `sudo ldapadd -x -D cn=admin,dc=mylab,dc=xx,dc=xx,dc=edu -W -f ldapuser1.ldif`
  
-## Modifying the slapd Configuration Database
+## Modifying slapd Configuration Database
 
 Create a file called `uid_index.ldif` with the contents:
 
@@ -228,7 +228,7 @@ Run the command
 `sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f cn\=corba.ldif`
 
 
-## Create Self-Signed Certificate
+## Creating Self-Signed Certificate
 
 `sudo apt-get install gnutls-bin ssl-cert`
 
@@ -343,7 +343,7 @@ On the server
 This first login will create the directory `/home/ldapuser1`.
 
 
-# Setting up NFS on the server
+# Setting up NFS on Server
 
 `sudo apt-get install nfs-kernel-server`
 
@@ -360,7 +360,7 @@ Add the following lines
 
 `sudo /etc/init.d/nfs-kernel-server restart`
 
-# Setting up Autofs on clients
+# Setting up Autofs on Clients
 
 `sudo apt-get install autofs`
 
