@@ -145,43 +145,25 @@ Add this file to the database
 
 To add the first LDAP user to the database, create a file called `ldapuser1.ldif` with the following lines
 
-`dn: cn=ldapuser1,ou=Group,dc=mylab,dc=xx,dc=xx,dc=edu`
-
-`objectClass: posixGroup`
-
-`cn: ldapuser1`
-
-`gidNumber: 10000`
-
-`dn: uid=ldapuser1,ou=People,dc=mylab,dc=xx,dc=xx,dc=edu`
-
-`objectClass: inetOrgPerson`
-
-`objectClass: posixAccount`
-
-`objectClass: shadowAccount`
-
-`uid: ldapuser1`
-
-`sn: ldapuser1`
-
-`givenName: ldapuser1`
-
-`cn: ldapuser1`
-
-`displayName: ldapuser1`
-
-`uidNumber: 10000`
-
-`gidNumber: 10000`
-
-`userPassword: somepasswd`
-
-`gecos: ldapuser1`
-
-`loginShell: /bin/bash`
-
-`homeDirectory: /home/ldapuser1`
+`dn: cn=ldapuser1,ou=Group,dc=mylab,dc=xx,dc=xx,dc=edu`<br/>
+`objectClass: posixGroup`<br/>
+`cn: ldapuser1`<br/>
+`gidNumber: 10000`<br/>
+`dn: uid=ldapuser1,ou=People,dc=mylab,dc=xx,dc=xx,dc=edu`<br/>
+`objectClass: inetOrgPerson`<br/>
+`objectClass: posixAccount`<br/>
+`objectClass: shadowAccount`<br/>
+`uid: ldapuser1`<br/>
+`sn: ldapuser1`<br/>
+`givenName: ldapuser1`<br/>
+`cn: ldapuser1`<br/>
+`displayName: ldapuser1`<br/>
+`uidNumber: 10000`<br/>
+`gidNumber: 10000`<br/>
+`userPassword: somepasswd`<br/>
+`gecos: ldapuser1`<br/>
+`loginShell: /bin/bash`<br/>
+`homeDirectory: /home/ldapuser1`<br/>
 
 Add it  to the database
 
@@ -191,11 +173,9 @@ Add it  to the database
 
 Create a file called `uid_index.ldif` with the contents:
 
-`dn: olcDatabase={1}mdb,cn=config`
-
-`add: olcDbIndex`
-
-`olcDbIndex: mail eq,sub`
+`dn: olcDatabase={1}mdb,cn=config`<br/>
+`add: olcDbIndex`<br/>
+`olcDbIndex: mail eq,sub`<br/>
 
 Run the command:
 
@@ -203,33 +183,20 @@ Run the command:
 
 Create a file called `schema_convert.conf` with the contents:
 
-`include /etc/ldap/schema/core.schema`
-
-`include /etc/ldap/schema/collective.schema`
-
-`include /etc/ldap/schema/corba.schema`
-
-`include /etc/ldap/schema/cosine.schema`
-
-`include /etc/ldap/schema/duaconf.schema`
-
-`include /etc/ldap/schema/dyngroup.schema`
-
-`include /etc/ldap/schema/inetorgperson.schema`
-
-`include /etc/ldap/schema/java.schema`
-
-`include /etc/ldap/schema/misc.schema`
-
-`include /etc/ldap/schema/nis.schema`
-
-`include /etc/ldap/schema/openldap.schema`
-
-`include /etc/ldap/schema/ppolicy.schema`
-
-`include /etc/ldap/schema/ldapns.schema`
-
-`include /etc/ldap/schema/pmi.schema`
+`include /etc/ldap/schema/core.schema`<br/>
+`include /etc/ldap/schema/collective.schema`<br/>
+`include /etc/ldap/schema/corba.schema`<br/>
+`include /etc/ldap/schema/cosine.schema`<br/>
+`include /etc/ldap/schema/duaconf.schema`<br/>
+`include /etc/ldap/schema/dyngroup.schema`<br/>
+`include /etc/ldap/schema/inetorgperson.schema`<br/>
+`include /etc/ldap/schema/java.schema`<br/>
+`include /etc/ldap/schema/misc.schema`<br/>
+`include /etc/ldap/schema/nis.schema`<br/>
+`include /etc/ldap/schema/openldap.schema`<br/>
+`include /etc/ldap/schema/ppolicy.schema`<br/>
+`include /etc/ldap/schema/ldapns.schema`<br/>
+`include /etc/ldap/schema/pmi.schema`<br/>
 
 Create a directory:
 
@@ -243,27 +210,19 @@ Run the following commands
 
 Edit `cn=corba.ldif` to arrive at the following attributes:
 
-`dn: cn=corba,cn=schema,cn=config`
-
-`...`
-
-`cn: corba`
+`dn: cn=corba,cn=schema,cn=config`<br/>
+`...`<br/>
+`cn: corba`<br/>
 
 And remove the following lines from the bottom:
 
-`structuralObjectClass: olcSchemaConfig`
-
-`entryUUID: 52109a02-66ab-1030-8be2-bbf166230478`
-
-`creatorsName: cn=config`
-
-`createTimestamp: 20110829165435Z`
-
-`entryCSN: 20110829165435.935248Z#000000#000#000000`
-
-`modifiersName: cn=config`
-
-`modifyTimestamp: 20110829165435Z`
+`structuralObjectClass: olcSchemaConfig`<br/>
+`entryUUID: 52109a02-66ab-1030-8be2-bbf166230478`<br/>
+`creatorsName: cn=config`<br/>
+`createTimestamp: 20110829165435Z`<br/>
+`entryCSN: 20110829165435.935248Z#000000#000#000000`<br/>
+`modifiersName: cn=config`<br/>
+`modifyTimestamp: 20110829165435Z`<br/>
 
 Run the command
 
@@ -280,11 +239,9 @@ Run the command
 
 With the following template
 
-`cn = My Lab`
-
-`ca`
-
-`cert_signing_key`
+`cn = My Lab`<br/>
+`ca`<br/>
+`cert_signing_key`<br/>
 
 Run the commands
 
@@ -296,19 +253,14 @@ Run the commands
 
 Add the following lines
 
-`organization = My Lab`
+`organization = My Lab`<br/>
+`cn = mylab.xx.xx.edu`<br/>
+`tls_www_server`<br/>
+`encryption_key`<br/>
+`signing_key`<br/>
+`expiration_days = 3650`<br/>
 
-`cn = mylab.xx.xx.edu`
-
-`tls_www_server`
-
-`encryption_key`
-
-`signing_key`
-
-`expiration_days = 3650`
-
-This crtificate is goog for ten years. Then run
+This crtificate is good for ten years. Then run
 
 `sudo certtool --generate-certificate --load-privkey /etc/ssl/private/mylab_slapd_key.pem --load-ca-certificate /etc/ssl/certs/cacert.pem --load-ca-privkey /etc/ssl/private/cakey.pem --template /etc/ssl/mylab.info --outfile /etc/ssl/certs/mylab_slapd_cert.pem`
 
@@ -322,23 +274,15 @@ This crtificate is goog for ten years. Then run
 
 Create the file called `certinfo.ldif` with the contents
 
-`dn: cn=config`
-
-`add: olcTLSCACertificateFile`
-
-`olcTLSCACertificateFile: /etc/ssl/certs/cacert.pem`
-
-`-`
-
-`add: olcTLSCertificateFile`
-
-`olcTLSCertificateFile: /etc/ssl/certs/mylab_slapd_cert.pem`
-
-`-`
-
-`add: olcTLSCertificateKeyFile`
-
-`olcTLSCertificateKeyFile: /etc/ssl/private/mylab_slapd_key.pem`
+`dn: cn=config`<br/>
+`add: olcTLSCACertificateFile`<br/>
+`olcTLSCACertificateFile: /etc/ssl/certs/cacert.pem`<br/>
+`-`<br/>
+`add: olcTLSCertificateFile`<br/>
+`olcTLSCertificateFile: /etc/ssl/certs/mylab_slapd_cert.pem`<br/>
+`-`<br/>
+`add: olcTLSCertificateKeyFile`<br/>
+`olcTLSCertificateKeyFile: /etc/ssl/private/mylab_slapd_key.pem`<br/>
 
 Then run
 
@@ -359,9 +303,8 @@ On the client, edit
 
 Change the parameters `BASE` and `URI` to
 
-`BASE   dc=mylab,dc=xx,dc=xx,dc=edu`
-
-`URI    ldap://IP of the server`
+`BASE   dc=mylab,dc=xx,dc=xx,dc=edu`<br/>
+`URI    ldap://IP of the server`<br/>
 
 On the server, edit
 
@@ -369,9 +312,8 @@ On the server, edit
 
 Change the parameters `BASE` and `URI` to
 
-`BASE   dc=mylab,dc=xx,dc=xx,dc=edu`
-
-`URI    ldap://localhost`
+`BASE   dc=mylab,dc=xx,dc=xx,dc=edu`<br/>
+`URI    ldap://localhost`<br/>
 
 On both the server and client, install 
 
@@ -412,8 +354,8 @@ Edit the file `/etc/exports`
 
 Add the following lines
 
-/rhome             nn.nn.nn.0/24(rw,sync)
-/share             nn.nn.nn.0/24(rw,sync)
+`/rhome             nn.nn.nn.0/24(rw,sync)`<br/>
+`/share             nn.nn.nn.0/24(rw,sync)`
 
 `sudo mkdir -p /share/apps`
 
@@ -444,11 +386,72 @@ Create two map files
 
 and add
 
-`*    -nfsvers=4 -fstype=auto  server's IP:/rhome/&`
+`*   -fstype=nfs,rw,hard,intr,nodev,exec,nosuid,rsize=8192,wsize=8192   server's IP:/rhome/&`
 
 `sudo vim /etc/auto.share`
 
 and add
 
-`apps    -nfsvers=4 -fstype=auto  server's IP:/rhome/apps`
+`apps    -fstype=nfs,rw,hard,intr,nodev,exec,nosuid,rsize=8192,wsize=8192  server's IP:/share/apps`
 
+Restart Autofs service
+
+`sudo /etc/init.d/autofs restart`
+
+Check if the user's home directory is mounted:
+
+`cd /home/ldapuser1`
+
+
+# Installing Modules
+
+Do this on both server and clients.
+
+Download Modules here: http://modules.sourceforge.net/
+
+`tar -xzf modules-4.1.3.tar.gz`
+
+`cd modules-4.1.3/`
+
+`sudo mkdir /share/apps/modules`
+
+`./configure --prefix=/usr/share/Modules --with-modulepath=/share/apps/modules`
+
+`make`
+
+`sudo make install`
+
+`sudo ln -s /usr/share/Modules/init/profile.sh /etc/profile.d/modules.sh`
+
+`sudo ln -s /usr/share/Modules/init/profile.csh /etc/profile.d/modules.csh`
+
+# Installing the First Shared App
+Do this only on the server.
+
+Download VMD here: http://www.ks.uiuc.edu/Research/vmd/
+
+`sudo mkdir /share/apps/vmd/1.9.4`
+
+Follow the installation instruction to install vmd in `/share/apps/vmd/1.9.4`
+
+Add a module file for vmd.
+
+`sudo mkdir /share/apps/modules/vmd`
+
+`sudo vim /share/apps/modules/vmd/1.9.4`
+
+Put the following contents
+`#%Module1.0`<br\>
+`proc ModulesHelp { } {`<br\>
+`global dotversion`<br\>
+`puts stderr "VMD v. 1.9.4 \n\thttp://www.ks.uiuc.edu/Research/vmd"`<br\>
+`}`<br\>
+`module-whatis "VMD Molecular Visualization Package"`<br\>
+`prepend-path PATH /share/apps/vmd/1.9.4/bin`<br\>
+`setenv VMD_PLUGIN_PATH /share/apps/vmd/1.9.4/lib/plugins/LINUXAMD64/molfile`<br\>
+
+Check 
+
+`module avail`
+
+`module load vmd/1.9.4`
