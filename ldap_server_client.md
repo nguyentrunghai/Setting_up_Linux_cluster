@@ -440,14 +440,20 @@ Add a module file for vmd.
 
 Put in the following contents
 
-`#%Module1.0`<br\>
-`proc ModulesHelp { } {`<br\>
-`global dotversion`<br\>
-`puts stderr "VMD v. 1.9.4 \n\thttp://www.ks.uiuc.edu/Research/vmd"`<br\>
-`}`<br\>
-`module-whatis "VMD Molecular Visualization Package"`<br\>
-`prepend-path PATH /share/apps/vmd/1.9.4/bin`<br\>
-`setenv VMD_PLUGIN_PATH /share/apps/vmd/1.9.4/lib/plugins/LINUXAMD64/molfile`<br\>
+`#%Module1.0`
+
+`proc ModulesHelp { } {`
+
+`global dotversion`
+
+`puts stderr "VMD v. 1.9.4 \n\thttp://www.ks.uiuc.edu/Research/vmd"`
+`}`
+
+`module-whatis "VMD Molecular Visualization Package"`
+
+`prepend-path PATH /share/apps/vmd/1.9.4/bin`
+
+`setenv VMD_PLUGIN_PATH /share/apps/vmd/1.9.4/lib/plugins/LINUXAMD64/molfile`
 
 Check 
 
