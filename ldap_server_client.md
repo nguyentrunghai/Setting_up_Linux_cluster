@@ -16,8 +16,7 @@ This will make things easiser when we want to move all the users' data to anothe
 This is done on the server only.
 
 ## Move the admin user out of `/home`
-This is done on both server and clients.
-
+This is done on both server and clients.<br/>
 Change user to root
 
 `~$ sudo -i`
@@ -90,7 +89,7 @@ Edit the file `fstab`
 
 Add the line 
 
-`sudo /rhome   /home   none  bind`
+`/rhome   /home   none  bind`
 
 `sudo mount -a`
 
@@ -133,17 +132,12 @@ sudo /etc/init.d/slapd status
 
 Create a file called `base.ldif`, with the following lines:
 
-`dn: ou=People,dc=mylab,dc=xx,dc=xx,dc=edu`
-
-`objectClass: organizationalUnit`
-
-`ou: People`
-
-`dn: ou=Group,dc=mylab,dc=xx,dc=xx,dc=edu`
-
-`objectClass: organizationalUnit`
-
-`ou: Group`
+`dn: ou=People,dc=mylab,dc=xx,dc=xx,dc=edu`<br/>
+`objectClass: organizationalUnit`<br/>
+`ou: People`<br/>
+`dn: ou=Group,dc=mylab,dc=xx,dc=xx,dc=edu`<br/>
+`objectClass: organizationalUnit`<br/>
+`ou: Group`<br/>
 
 Add this file to the database
 
@@ -314,7 +308,7 @@ Add the following lines
 
 `expiration_days = 3650`
 
-Then run
+This crtificate is goog for ten years. Then run
 
 `sudo certtool --generate-certificate --load-privkey /etc/ssl/private/mylab_slapd_key.pem --load-ca-certificate /etc/ssl/certs/cacert.pem --load-ca-privkey /etc/ssl/private/cakey.pem --template /etc/ssl/mylab.info --outfile /etc/ssl/certs/mylab_slapd_cert.pem`
 
