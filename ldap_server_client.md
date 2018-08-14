@@ -1,31 +1,32 @@
 
-This is a documentation of how I set up an Ubuntu linux cluster for our Computational Chemistry Lab at 
+This documentats how I set up an Ubuntu linux cluster for our Computational Chemistry Lab at 
 University of Illinois at Chicago.
 
 The cluster includes one server and several clients. User login authentication is managed by OpenLDAP.
 Users' home and application directories are exported from the server using NFS. 
-The clients use Autofs to mount users' home and applications directories on demand.
+The clients use Autofs to mount users' home and applications directories on demand from the server.
 
 # Preparation
-After installing Ubuntu on the server and clients, we need to move the admin user out of the `/home` direcrory 
-to avoid overiding when we mount `/home` from the server to clients.
+After installing Ubuntu (16.04) on the server and clients, we need to move the admin user out of `/home` direcrory 
+to avoid overriding when `/home` is mounted.
 
-We need to also rename the `/home` directory to `/rhome` and create a new empty 
+We need to also rename `/home` directory to `/rhome` and create a new empty 
 `/home` and mount `/rhome` to `/home`.
 This will make things easiser when we want to move all the users' data to another disk partition.
 This is done on the server only.
 
 ## Move the admin user out of `/home`
-This is done on both server and clients.<br/>
-Change user to root
+This is done on both server and clients.
+
+Change user to root.
 
 `~$ sudo -i`
 
-Edit the `passwd` file
+Edit the `passwd` file.
 
 `~# vim /etc/passwd`
 
-Change the line near the end of the file:
+Change the line near the end of the file.
 
 `adminuser:x:1001:1001:Admin,,,:/home/adminuser:/bin/bash`
 
@@ -33,11 +34,11 @@ to
 
 `adminuser:x:999:999:Admin,,,:/adminuser:/bin/bash`
 
-Edit the `group` file
+Edit the `group` file.
 
 `~# vim /etc/group`
 
-Change the line near the end of the file:
+Change the line near the end of the file.
 
 `adminuser:x:1001:`
 
@@ -47,16 +48,16 @@ to
 
 Move the admin home
 
-`mv /home/adminuser /`
+`~# mv /home/adminuser /`
 
 Change the ower
 
-`chown -R adminuser:adminuser /adminuser`
+`~# chown -R adminuser:adminuser /adminuser`
 
-`chown -R adminuser:adminuser /adminuser/.*`
+`~# chown -R adminuser:adminuser /adminuser/.*`
 
 
-Edit the file `login.defs`
+Edit the file `login.defs`.
 
 `~# vim /etc/login.defs`
 
@@ -87,7 +88,7 @@ Edit the file `fstab`
 
 `sudo vim /etc/fsatb`
 
-Add the line 
+Add the line.
 
 `/rhome   /home   none  bind`
 
@@ -102,11 +103,9 @@ On the server, install:
 
 `sudo apt-get install slapd ldap-utils`
 
-Give the password for the admin of the LDAP directory. 
+Give the password for the admin of the LDAP directory. LDAP should run after installed. Check the status by
 
-LDAP should run after installed. Check the status by
-
-sudo /etc/init.d/slapd status
+`sudo /etc/init.d/slapd status`
 
 ## Post-Installation Configuration
 
@@ -118,7 +117,7 @@ sudo /etc/init.d/slapd status
 
 *Organization name:* **MyLab**
 
-*Administrator password:* **Same as above**
+*Administrator password:* Same as above
 
 *Database backend to use:* **MDB**
 
@@ -128,7 +127,7 @@ sudo /etc/init.d/slapd status
 
 *Allow LDAPv2 protocol?* **No**
 
-## Populating LDAP database
+## Populating LDAP Database
 
 Create a file called `base.ldif`, with the following lines:
 
@@ -139,7 +138,7 @@ Create a file called `base.ldif`, with the following lines:
 `objectClass: organizationalUnit`<br/>
 `ou: Group`<br/>
 
-Add this file to the database
+Add this file to the database.
 
 `sudo ldapadd -x -D cn=admin,dc=mylab,dc=xx,dc=xx,dc=edu -W -f base.ldif`
 
@@ -165,7 +164,7 @@ To add the first LDAP user to the database, create a file called `ldapuser1.ldif
 `loginShell: /bin/bash`<br/>
 `homeDirectory: /home/ldapuser1`<br/>
 
-Add it  to the database
+Add it  to the database.
 
 `sudo ldapadd -x -D cn=admin,dc=mylab,dc=xx,dc=xx,dc=edu -W -f ldapuser1.ldif`
  
@@ -202,7 +201,7 @@ Create a directory:
 
 `mkdir ldif_output`
 
-Run the following commands
+Run the following commands:
 
 `slapcat -f schema_convert.conf -F ldif_output -n 0 | grep corba,cn=schema`
 
@@ -229,7 +228,7 @@ Run the command
 `sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f cn\=corba.ldif`
 
 
-## Create self-signed Certificate
+## Create Self-Signed Certificate
 
 `sudo apt-get install gnutls-bin ssl-cert`
 
@@ -315,7 +314,7 @@ Change the parameters `BASE` and `URI` to
 `BASE   dc=mylab,dc=xx,dc=xx,dc=edu`<br/>
 `URI    ldap://localhost`<br/>
 
-On both the server and client, install 
+On both the server and client, install.
 
 `sudo apt-get install libnss-ldapd libpam-ldapd nslcd`
 
@@ -329,7 +328,7 @@ Check authentication:
 
 `getent shadow`
 
-we should see `ldapuser1` in the output.
+We should see `ldapuser1` in the output.
 
 On the server, run 
 
@@ -355,7 +354,7 @@ Edit the file `/etc/exports`
 Add the following lines
 
 `/rhome             nn.nn.nn.0/24(rw,sync)`<br/>
-`/share             nn.nn.nn.0/24(rw,sync)`
+`/share             nn.nn.nn.0/24(rw,sync)`<br/>
 
 `sudo mkdir -p /share/apps`
 
@@ -375,12 +374,11 @@ Edit `/etc/ldap/ldap.conf`
 
 and add
 
-`/home   /etc/auto.home  --timeout=600`
+`/home   /etc/auto.home  --timeout=600`<br/>
+`/share  /etc/auto.share --timeout=600`<br/>
 
-`/share  /etc/auto.share --timeout=600`
 
-
-Create two map files
+Create two map files.
 
 `sudo vim /etc/auto.home`
 
@@ -394,7 +392,7 @@ and add
 
 `apps    -fstype=nfs,rw,hard,intr,nodev,exec,nosuid,rsize=8192,wsize=8192  server's IP:/share/apps`
 
-Restart Autofs service
+Restart Autofs service.
 
 `sudo /etc/init.d/autofs restart`
 
@@ -426,7 +424,7 @@ Download Modules here: http://modules.sourceforge.net/
 `sudo ln -s /usr/share/Modules/init/profile.csh /etc/profile.d/modules.csh`
 
 # Installing the First Shared App
-Do this only on the server.
+Do this on the server only.
 
 Download VMD here: http://www.ks.uiuc.edu/Research/vmd/
 
@@ -440,7 +438,7 @@ Add a module file for vmd.
 
 `sudo vim /share/apps/modules/vmd/1.9.4`
 
-Put the following contents
+Put in the following contents
 `#%Module1.0`<br\>
 `proc ModulesHelp { } {`<br\>
 `global dotversion`<br\>
@@ -455,3 +453,14 @@ Check
 `module avail`
 
 `module load vmd/1.9.4`
+
+
+# References
+[1] https://help.ubuntu.com/lts/serverguide/openldap-server.html
+
+[2] https://help.ubuntu.com/community/LDAPClientAuthentication
+
+[3] https://wiki.debian.org/LDAP/NSS
+
+[4] https://help.ubuntu.com/community/AutofsLDAP
+
