@@ -439,6 +439,7 @@ Add a module file for vmd.
 `sudo vim /share/apps/modules/vmd/1.9.4`
 
 Put in the following contents
+
 `#%Module1.0`<br\>
 `proc ModulesHelp { } {`<br\>
 `global dotversion`<br\>
