@@ -455,7 +455,7 @@ Put in the following contents
 
 `setenv VMD_PLUGIN_PATH /share/apps/vmd/1.9.4/lib/plugins/LINUXAMD64/molfile`
 
-Check 
+Test loading the module. 
 
 `module avail`
 
