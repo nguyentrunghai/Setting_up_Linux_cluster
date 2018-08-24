@@ -93,6 +93,7 @@ Reboot the computer.
 
 
 ## Move `/home` to `/rhome` 
+We need to do this on ther server.
 
 `sudo mv /home /rhome`
 
