@@ -370,6 +370,8 @@ Add the following lines
 `/rhome             nn.nn.nn.0/24(rw,sync)`<br/>
 `/share             nn.nn.nn.0/24(rw,sync)`<br/>
 
+Need to do this on the server:
+
 `sudo mkdir -p /share/apps`
 
 `sudo /etc/init.d/nfs-kernel-server restart`
