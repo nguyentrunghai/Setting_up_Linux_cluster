@@ -48,9 +48,9 @@ to
 
 Change the ower
 
-`~# chown adminuser:adminuser /home/adminuser`
+`~# chown -R adminuser:adminuser /home/adminuser`
 
-`~# chown adminuser:adminuser /home/adminuser/.*`
+`~# chown -R adminuser:adminuser /home/adminuser/.*`
 
 Move the admin home
 
