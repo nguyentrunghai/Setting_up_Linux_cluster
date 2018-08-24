@@ -420,6 +420,9 @@ Check if the user's home directory is mounted:
 # Installing Modules
 
 Do this on both server and clients.
+Install dependencies as listed here:
+
+https://modules.readthedocs.io/en/stable/INSTALL.html
 
 Download Modules here: http://modules.sourceforge.net/
 
