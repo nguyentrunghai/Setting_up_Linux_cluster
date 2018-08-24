@@ -420,6 +420,7 @@ Check if the user's home directory is mounted:
 # Installing Modules
 
 Do this on both server and clients.
+
 Install dependencies as listed here:
 
 https://modules.readthedocs.io/en/stable/INSTALL.html
@@ -430,7 +431,8 @@ Download Modules here: http://modules.sourceforge.net/
 
 `cd modules-4.1.3/`
 
-`sudo mkdir /share/apps/modules`
+
+`sudo mkdir /share/apps/modules`   # need to do this on the server
 
 `./configure --prefix=/usr/share/Modules --with-modulepath=/share/apps/modules`
 
