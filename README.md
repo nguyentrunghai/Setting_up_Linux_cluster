@@ -342,6 +342,7 @@ Check authentication:
 `getent shadow`
 
 We should see `ldapuser1` in the output.
+Now we should able to login to ldapuser1. Maybe reboot is needed.
 
 On the server, run 
 
@@ -381,9 +382,9 @@ Check directories shared by the server
 
 `showmount -e server's IP`
 
-Edit `/etc/ldap/ldap.conf`
+Edit `/etc/auto.master`
 
-`sudo vim /etc/ldap/ldap.conf`
+`sudo vim /etc/auto.master`
 
 and add
 
