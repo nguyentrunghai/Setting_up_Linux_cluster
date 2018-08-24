@@ -32,7 +32,7 @@ Change the line near the end of the file.
 
 to
 
-`adminuser:x:999:999:Admin,,,:/adminuser:/bin/bash`
+`adminuser:x:999:999:Admin,,,:/home/adminuser:/bin/bash`
 
 Edit the `group` file.
 
@@ -46,15 +46,27 @@ to
 
 `adminuser:x:999:`
 
+Change the ower
+
+`~# chown adminuser:adminuser /home/adminuser`
+
+`~# chown adminuser:adminuser /home/adminuser/.*`
+
 Move the admin home
 
 `~# mv /home/adminuser /`
 
-Change the ower
+Edit the `passwd` file again.
 
-`~# chown -R adminuser:adminuser /adminuser`
+`~# vim /etc/passwd`
 
-`~# chown -R adminuser:adminuser /adminuser/.*`
+Change the line.
+
+`adminuser:x:999:999:Admin,,,:/home/adminuser:/bin/bash`
+
+to
+
+`adminuser:x:999:999:Admin,,,:/adminuser:/bin/bash`
 
 
 Edit the file `login.defs`.
