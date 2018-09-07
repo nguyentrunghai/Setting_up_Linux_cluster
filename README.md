@@ -108,6 +108,21 @@ Add the line.
 `sudo mount -a`
 
 
+## Hide user list from the login screen
+
+Create a file in /etc/lightdm/lightdm.conf.d
+
+sudo vim etc/lightdm/lightdm.conf.d/00-hide-user-list.conf
+
+Add the following contents
+
+`[SeatDefaults]`<br/>
+`greeter-hide-users=true`<br/>
+`greeter-show-manual-login=true`<br/>
+`allow-guest=false`<br/>
+
+Reboot. 
+
 # Setting up OpenLDAP Server
 
 On the server, install:
