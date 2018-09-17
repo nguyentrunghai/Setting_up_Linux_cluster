@@ -7,7 +7,15 @@ Users' home and application directories are exported from the server using NFS.
 The clients use Autofs to mount users' home and applications directories on demand from the server.
 
 # Preparation
-After installing Ubuntu (16.04) on the server and clients, we need to move the admin user out of `/home` direcrory 
+After installing Ubuntu (16.04) on the server and clients, run update and upgrade.
+
+`sudo apt-get update`
+
+`sudo apt-get upgrade`
+
+`sudo apt-get dist-upgrade`
+
+Then we need to move the admin user out of `/home` direcrory 
 to avoid overriding when `/home` is mounted.
 
 We need to also rename `/home` directory to `/rhome` and create a new empty 
