@@ -448,6 +448,10 @@ Install dependencies as listed here:
 
 https://modules.readthedocs.io/en/stable/INSTALL.html
 
+`sudo apt-get install autopoint`
+
+`sudo apt-get install tcl-dev`
+
 Download Modules here: http://modules.sourceforge.net/
 
 `tar -xzf modules-4.1.3.tar.gz`
