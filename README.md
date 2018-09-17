@@ -93,7 +93,7 @@ Reboot the computer.
 
 
 ## Move `/home` to `/rhome` 
-We need to do this on ther server.
+We need to do this on the server.
 
 `sudo mv /home /rhome`
 
@@ -112,7 +112,7 @@ Add the line.
 
 Create a file in /etc/lightdm/lightdm.conf.d
 
-sudo vim etc/lightdm/lightdm.conf.d/00-hide-user-list.conf
+`sudo vim /etc/lightdm/lightdm.conf.d/00-hide-user-list.conf`
 
 Add the following contents
 
