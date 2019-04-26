@@ -28,11 +28,11 @@ This is done on both server and clients.
 
 Change user to root.
 
-`~$ sudo -i`
+<code>~$ sudo -i</code>
 
 Edit the `passwd` file.
 
-`~# vim /etc/passwd`
+<code>~# vim /etc/passwd</code>
 
 Change the line near the end of the file.
 
