@@ -9,7 +9,7 @@ The clients use Autofs to mount users' home and applications directories on dema
 # Preparation
 After installing Ubuntu (16.04) on the server and clients, run update and upgrade.
 
-`sudo apt-get update`
+<code>sudo apt-get update</code>
 
 `sudo apt-get upgrade`
 
