@@ -36,11 +36,11 @@ Edit the `passwd` file.
 
 Change the line near the end of the file.
 
-`adminuser:x:1001:1001:Admin,,,:/home/adminuser:/bin/bash`
+<code>adminuser:x:1001:1001:Admin,,,:/home/adminuser:/bin/bash</code>
 
 to
 
-`adminuser:x:999:999:Admin,,,:/home/adminuser:/bin/bash`
+<code>adminuser:x:999:999:Admin,,,:/home/adminuser:/bin/bash</code>
 
 Edit the `group` file.
 
