@@ -11,9 +11,9 @@ After installing Ubuntu (16.04) on the server and clients, run update and upgrad
 
 <code>sudo apt-get update</code>
 
-`sudo apt-get upgrade`
+<code>sudo apt-get upgrade</code>
 
-`sudo apt-get dist-upgrade`
+<code>sudo apt-get dist-upgrade</code>
 
 Then we need to move the admin user out of `/home` direcrory 
 to avoid overriding when `/home` is mounted.
